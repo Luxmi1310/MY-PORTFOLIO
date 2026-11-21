@@ -1,261 +1,523 @@
+
 import React, { useState } from 'react';
 import './App.css';
 
 function App() {
-  // UX Optimization: Skill filtering tab state
   const [activeTab, setActiveTab] = useState('All');
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const skillsData = [
-    { title: "Frontend Frameworks", type: "Technical", items: ["React", "JavaScript (ES6+)", "HTML5/CSS3", "Bootstrap", "jQuery", "AJAX"] },
-    { title: "Backend Environments", type: "Technical", items: ["Express.js", "Node.js", "Laravel", "PHP"] },
-    { title: "Database Systems", type: "Technical", items: ["MongoDB", "MySQL"] },
-    { title: "CMS & Platforms", type: "Management", items: ["WordPress", "Git", "GitHub", "XAMPP", "NPM"] }
-  ];
-
-  const filteredSkills = activeTab === 'All' 
-    ? skillsData 
-    : skillsData.filter(skill => skill.type === activeTab);
-
-  const projectsData = [
     {
-      title: "College Events Management System",
-      description: "A secure, multi-role ecosystem featuring automated email OTP verification and comprehensive admin tools built to streamline institutional workflows.",
-      tags: ["PHP", "MySQL", "Bootstrap", "JavaScript"],
-      liveUrl: "https://luxmi.hbiscloud.in/",
-      githubUrl: "https://github.com/Luxmi1310"
+      title: 'Backend Development',
+      type: 'Backend',
+      items: ['PHP', 'Laravel', 'Node.js', 'Express.js', 'REST APIs']
     },
     {
-      title: "Student Management System",
-      description: "Enterprise-grade CRUD system designed with dynamic role permissions, optimized indexing, and fluid user interactions for tracking institutional metrics.",
-      tags: ["Laravel", "PHP", "MySQL"],
-      liveUrl: "#", 
-      githubUrl: "https://github.com/Luxmi1310"
+      title: 'Frontend Development',
+      type: 'Frontend',
+      items: ['React.js', 'JavaScript ES6+', 'HTML5', 'CSS3', 'Bootstrap', 'jQuery', 'AJAX']
+    },
+    {
+      title: 'Databases',
+      type: 'Database',
+      items: ['MySQL', 'MongoDB']
+    },
+    {
+      title: 'Development Tools',
+      type: 'Tools',
+      items: ['Git', 'GitHub', 'Postman', 'WordPress', 'XAMPP', 'NPM']
     }
   ];
 
+  const tabs = ['All', 'Backend', 'Frontend', 'Database', 'Tools'];
+
+  const filteredSkills =
+    activeTab === 'All'
+      ? skillsData
+      : skillsData.filter(skill => skill.type === activeTab);
+
+  const experienceData = [
+    {
+      company: 'Web Riderz',
+      role: 'Backend Developer Intern / Trainee',
+      employment: 'Full-time',
+      status: 'Current',
+      description:
+        'Currently gaining hands-on experience in backend development, server-side programming, application logic, and database-driven web development.',
+      tags: ['Backend Development', 'Server-side Programming', 'Web Development']
+    },
+    {
+      company: 'HB Infotech Solutions',
+      role: 'Full-Stack Developer Trainee / Intern',
+      employment: 'Previous Experience',
+      status: 'Completed',
+      description:
+        'Gained practical experience in full-stack web development, working with PHP, Laravel, MySQL, frontend technologies, and WordPress-based projects.',
+      tags: ['PHP', 'Laravel', 'MySQL', 'WordPress']
+    }
+  ];
+
+  const projectsData = [
+    {
+      title: 'Multi-Vendor Marketplace',
+      category: 'Backend Development',
+      description:
+        'A Laravel-based marketplace project focused on vendor and customer workflows, authentication, product management, and category management.',
+      tags: ['Laravel', 'PHP', 'MySQL', 'Bootstrap'],
+      liveUrl: null,
+      githubUrl: null,
+      status: 'In Development'
+    },
+    {
+      title: 'College Events Management System',
+      category: 'Full-Stack Development',
+      description:
+        'A web-based event management application featuring student registration, login, email OTP verification, event management, and an administrative dashboard.',
+      tags: ['PHP', 'MySQL', 'Bootstrap', 'JavaScript'],
+      liveUrl: 'https://luxmi.hbiscloud.in/',
+      githubUrl: 'https://github.com/Luxmi1310/college-events-php',
+      status: 'Live'
+    },
+    {
+      title: 'Student Management System',
+      category: 'Backend Development',
+      description:
+        'A Laravel-based application featuring separate admin and student authentication, student and course management, CRUD functionality, and role-based permissions.',
+      tags: ['Laravel', 'PHP', 'MySQL', 'Spatie'],
+      liveUrl: null,
+      githubUrl: null,
+      status: 'Project'
+    },
+    {
+      title: 'MERN Inventory Management System',
+      category: 'Full-Stack Development',
+      description:
+        'An inventory management application built with the MERN stack, featuring JWT authentication, user management, CRUD operations, and an administrative dashboard.',
+      tags: ['React', 'Node.js', 'Express.js', 'MongoDB'],
+      liveUrl: null,
+      githubUrl: null,
+      status: 'Project'
+    }
+  ];
+
+  const navigationLinks = [
+    { label: 'About', href: '#about' },
+    { label: 'Experience', href: '#experience' },
+    { label: 'Skills', href: '#skills' },
+    { label: 'Projects', href: '#projects' },
+    { label: 'Achievements', href: '#achievements' },
+    { label: 'Contact', href: '#contact' }
+  ];
+
+  const closeMenu = () => setMenuOpen(false);
+
   return (
     <div className="app-container">
-      {/* Background Decorative Glow Ambient Elements */}
+
+      {/* Background effects */}
       <div className="glow-sphere sphere-1"></div>
       <div className="glow-sphere sphere-2"></div>
 
-      {/* --- PREMIUM NAVBAR --- */}
+      {/* Navigation */}
       <header className="site-header">
-        <nav className="nav-wrapper">
-          <div className="nav-logo">Luxmi<span>.</span></div>
-          <ul className="nav-menu">
-            <li><a href="#about">About</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Work</a></li>
+        <nav className="nav-wrapper" aria-label="Main navigation">
+
+          <a href="#home" className="nav-logo" onClick={closeMenu}>
+            Luxmi<span>.</span>
+          </a>
+
+          <ul
+  id="mobile-navigation"
+  className={`nav-menu ${menuOpen ? 'nav-menu-open' : ''}`}
+>
+            {navigationLinks.map(link => (
+              <li key={link.href}>
+                <a href={link.href} onClick={closeMenu}>
+                  {link.label}
+                </a>
+              </li>
+            ))}
           </ul>
-          <a href="https://www.linkedin.com/in/luxmi-singh-814978361/" target="_blank" rel="noopener noreferrer" className="nav-cta-btn">Connect on LinkedIn</a>
+
+          <a
+            href="https://www.linkedin.com/in/luxmi-singh-814978361/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-cta-btn"
+          >
+            Let's Connect <span aria-hidden="true">↗</span>
+          </a>
+
+          <button
+            type="button"
+            className={`menu-toggle ${menuOpen ? 'menu-toggle-open' : ''}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
         </nav>
       </header>
 
       <main className="content-layout">
-        {/* --- HERO / INTRO SECTION --- */}
-        <section id="about" className="hero-section">
-          <div className="hero-content-left">
-            <div className="status-badge">
-              <span className="pulse-dot"></span> Actively Seeking Full-Time Software Engineering Roles
-            </div>
-            <h1 className="hero-title">
-              Engineering <br />
-              High-Performance <span className="gradient-text">Web Apps.</span>
-            </h1>
-            <p className="hero-subtitle">
-              Hi, I'm <strong>Luxmi </strong>. I am a recent BCA graduate accelerating my industry expertise through a part-time Full Stack Development internship at <strong>HB Infotech Solutions</strong>.
-            </p>
-            <p className="hero-hiring-pitch">
-              A veteran of 2 National-Level Hackathons with proven team leadership experience, I build clean frontend render architectures and robust backend services. I am ready to bring agency-tested value to your full-time engineering team.
-            </p>
-            <div className="hero-actions">
-              <a href="#projects" className="action-btn-primary">Explore My Work</a>
-              <a href="#experience" className="action-btn-secondary">View Milestones</a>
-            </div>
+
+        {/* Hero Section */}
+        
+<section className="hero-modern" id="home">
+  <div className="hero-content">
+    <p className="hero-greeting">HELLO, I'M</p>
+
+    <h1>
+      A Full-Stack
+      <span> Developer.</span>
+    </h1>
+
+    <h2>Backend Developer | Web Developer</h2>
+
+    <p className="hero-description">
+      I build responsive web applications and scalable backend
+      solutions using PHP, Laravel, React and modern web technologies.
+      I enjoy learning, solving problems and turning ideas into
+      practical applications.
+    </p>
+
+    <div className="hero-buttons">
+      <a href="#projects" className="hero-btn primary-btn">
+        Explore My Work
+      </a>
+
+      <a href="#contact" className="hero-btn secondary-btn">
+        Contact Me
+      </a>
+    </div>
+
+    <div className="hero-tech">
+      <span>PHP</span>
+      <span>Laravel</span>
+      <span>React</span>
+      <span>MySQL</span>
+      <span>Node.js</span>
+    </div>
+  </div>
+
+  <div className="hero-image-wrapper">
+    <div className="hero-image-glow"></div>
+    <img
+      src="/profile.png"
+      alt="Professional profile"
+      className="hero-profile-image"
+    />
+  </div>
+</section>
+
+
+        {/* About Section */}
+        <section id="about" className="content-section">
+
+          <div className="section-title-block">
+            <span className="section-index">01 // About Me</span>
+            <h2>Turning Ideas Into Applications</h2>
           </div>
 
-          <div className="hero-content-right">
-            <div className="interactive-frame">
-              <div className="profile-mesh">
-                <span className="mesh-initials">LS</span>
-              </div>
-              <div className="floating-metric">
-                <span className="metric-num">BCA Graduate</span>
-                <span className="metric-label">Intern @HB Infotech Solutions</span>
-              </div>
-            </div>
+          <div className="glass-card about-card">
+            <p>
+              I am a passionate web developer with a Bachelor of Computer
+              Applications (BCA) degree and practical experience in
+              backend and full-stack development.
+            </p>
+
+            <p>
+              My development interests include server-side programming,
+              database management, application architecture, and
+              building functional web applications. I continuously
+              work on improving my technical knowledge and problem-solving
+              abilities through practical projects and professional experience.
+            </p>
           </div>
+
         </section>
 
-        {/* --- NEW SECTION: EXPERIENCE & TIMELINE --- */}
-        <section id="experience" className="projects-section">
-          <div className="section-title-block" style={{ marginBottom: '40px' }}>
-            <span className="section-index">01 // Engineering Experience</span>
-            <h2>Professional Ecosystem</h2>
+        {/* Experience Section */}
+        <section id="experience" className="content-section">
+
+          <div className="section-title-block">
+            <span className="section-index">02 // Experience</span>
+            <h2>Professional Journey</h2>
           </div>
 
-          <div className="projects-flex-layout">
-            <div className="premium-project-card">
-              <div className="project-meta">
-                <span className="project-number">Active Role</span>
-                <h3>Full Stack Developer Intern — HB Infotech Solutions</h3>
-                <p>
-                  Contributed to multiple real-world agency projects. Collaborated closely with dev teams to engineer client-facing architectures, custom modules, database optimizations, and versatile WordPress implementations.
-                </p>
-              </div>
-              <div className="project-footer" style={{ borderTop: 'none', paddingTop: '0' }}>
-                <div className="tag-list">
-                  <span className="meta-tag">Production Code</span>
-                  <span className="meta-tag">Agile Lifecycle</span>
-                  <span className="meta-tag">WordPress Deployment</span>
-                </div>
-              </div>
-            </div>
+          <div className="experience-grid">
 
-            <div className="premium-project-card">
-              <div className="project-meta">
-                <span className="project-number">Leadership & Strategy</span>
-                <h3>Software Developer & Team Lead — Competitive Track</h3>
-                <p>
-                  Competed at <strong>2 National-Level Hackathons</strong>. Stepped up as absolute Team Lead during my debut hackathon, directing codebase synchronization, microservice architecture design, and timeline management under strict conditions.
-                </p>
-              </div>
-              <div className="project-footer" style={{ borderTop: 'none', paddingTop: '0' }}>
-                <div className="tag-list">
-                  <span className="meta-tag">Team Leadership</span>
-                  <span className="meta-tag">System Design</span>
-                  <span className="meta-tag">Rapid Prototyping</span>
+            {experienceData.map(experience => (
+              <article className="premium-project-card experience-card" key={experience.company}>
+
+                <div className="project-meta">
+                  <span className="project-number">
+                    {experience.status}
+                  </span>
+
+                  <h3>{experience.role}</h3>
+                  <h4 className="experience-company">{experience.company}</h4>
+
+                  <p>{experience.description}</p>
+
+                  <span className="metric-label experience-type">
+                    {experience.employment}
+                  </span>
                 </div>
-              </div>
-            </div>
+
+                <div className="project-footer">
+                  <div className="tag-list">
+                    {experience.tags.map(tag => (
+                      <span className="meta-tag" key={tag}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+              </article>
+            ))}
+
           </div>
+
         </section>
 
-        {/* --- SKILLS SECTION (WITH UX TAB FILTER) --- */}
-        <section id="skills" className="skills-section">
+        {/* Skills Section */}
+        <section id="skills" className="content-section">
+
           <div className="section-title-wrapper">
+
             <div className="section-title-block">
-              <span className="section-index">02 // Expertise</span>
-              <h2>Technical Weaponry</h2>
+              <span className="section-index">03 // Technical Expertise</span>
+              <h2>My Technical Skills</h2>
             </div>
-            
-            <div className="filter-tabs">
-              {['All', 'Technical', 'Management'].map((tab) => (
-                <button 
-                  key={tab} 
+
+            <div className="filter-tabs" role="group" aria-label="Filter skills">
+              {tabs.map(tab => (
+                <button
+                  type="button"
+                  key={tab}
                   className={`tab-btn ${activeTab === tab ? 'active' : ''}`}
                   onClick={() => setActiveTab(tab)}
+                  aria-pressed={activeTab === tab}
                 >
                   {tab}
                 </button>
               ))}
             </div>
+
           </div>
-          
+
           <div className="skills-glass-grid">
-            {filteredSkills.map((category, index) => (
-              <div className="glass-card skill-group" key={index}>
+
+            {filteredSkills.map(category => (
+              <div className="glass-card skill-group" key={category.title}>
+
                 <div className="card-accent-line"></div>
+
                 <h3>{category.title}</h3>
+
                 <div className="skill-pill-container">
-                  {category.items.map((item, i) => (
-                    <span key={i} className="skill-pill">{item}</span>
+                  {category.items.map(item => (
+                    <span className="skill-pill" key={item}>
+                      {item}
+                    </span>
                   ))}
                 </div>
+
               </div>
             ))}
+
           </div>
+
         </section>
 
-        {/* --- PROJECTS SECTION --- */}
-        <section id="projects" className="projects-section">
+        {/* Projects Section */}
+        <section id="projects" className="content-section">
+
           <div className="section-title-block">
-            <span className="section-index">03 // Featured Work</span>
-            <h2>Architected Applications</h2>
+            <span className="section-index">04 // Featured Work</span>
+            <h2>Projects I've Worked On</h2>
           </div>
 
           <div className="projects-flex-layout">
+
             {projectsData.map((project, index) => (
-              <article className="premium-project-card" key={index}>
+              <article className="premium-project-card" key={project.title}>
+
                 <div className="project-meta">
-                  <span className="project-number">0{index + 1}.</span>
+
+                  <span className="project-number">
+                    0{index + 1} // {project.category}
+                  </span>
+
                   <h3>{project.title}</h3>
+
                   <p>{project.description}</p>
+
+                  <span className="metric-label project-status">
+                    {project.status}
+                  </span>
+
                 </div>
-                
+
                 <div className="project-footer">
+
                   <div className="tag-list">
-                    {project.tags.map((tag, i) => (
-                      <span key={i} className="meta-tag">{tag}</span>
+                    {project.tags.map(tag => (
+                      <span className="meta-tag" key={tag}>
+                        {tag}
+                      </span>
                     ))}
                   </div>
-                  
+
                   <div className="project-actions-group">
-                    {project.liveUrl !== "#" && (
-                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="project-view-link live-link">
-                        Launch Live Application <span className="arrow">↗</span>
+
+                    {project.liveUrl && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="project-view-link live-link"
+                      >
+                        Live Demo <span aria-hidden="true">↗</span>
                       </a>
                     )}
-                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="project-view-link repo-link">
-                      Source Code <span className="arrow">→</span>
-                    </a>
+
+                    {project.githubUrl && (
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="project-view-link repo-link"
+                      >
+                        Source Code <span aria-hidden="true">→</span>
+                      </a>
+                    )}
+
                   </div>
+
                 </div>
+
               </article>
             ))}
+
           </div>
+
         </section>
 
-        {/* --- ACHIEVEMENTS SECTION --- */}
-        <section id="achievements" className="achievement-section">
+        {/* Achievements Section */}
+        <section id="achievements" className="content-section">
+
           <div className="section-title-block">
-            <span className="section-index">04 // Honors</span>
-            <h2>Notable Recognition</h2>
+            <span className="section-index">05 // Achievements</span>
+            <h2>Hackathons & Recognition</h2>
           </div>
 
           <div className="glass-card achievement-strip">
-            <div className="achievement-icon-box">🏆</div>
+
+            <div className="achievement-icon-box" aria-hidden="true">🏆</div>
+
             <div className="achievement-details">
-              <span className="achievement-tag">Robo MANAI 2026 // National Level</span>
-              <h3>Top 10 Hackathon Position</h3>
+
+              <span className="achievement-tag">
+                National-Level Hackathon Participation
+              </span>
+
+              <h3>Hackathon Experience</h3>
+
               <p>
-                Secured a placement in the elite Top 10 competitive teams out of broad nationwide participation, engineering the hardware-software automated mapping for the AMR-ERU project alongside Team Hack Mavericks.
+                Participated in two national-level hackathons,
+                gaining experience in teamwork, collaborative
+                development, technical problem-solving, and
+                building solutions under time constraints.
               </p>
+
             </div>
+
           </div>
+
         </section>
+
       </main>
 
-      {/* --- FOOTER / CONTACT --- */}
+      {/* Contact & Footer */}
       <footer id="contact" className="premium-footer">
+
         <div className="footer-main-grid">
+
           <div className="footer-left-brand">
-            <h2>Let's build something exceptional together.</h2>
-            <p>I am looking for an immediate full-time opportunity where I can contribute to core web architectures, API ecosystems, and dynamic platforms.</p>
+
+            <span className="section-index">06 // Get In Touch</span>
+
+            <h2>Let's Build Something Together.</h2>
+
+            <p>
+              I'm always interested in connecting with developers,
+              exploring new opportunities, and working on meaningful
+              web development projects.
+            </p>
+
           </div>
+
           <div className="footer-right-links">
+
             <div className="contact-links-grid">
-              <a href="mailto:singhluxmi86@gmail.com" className="contact-link-card">
-                <span className="link-label">Direct Email</span>
-                <span className="link-value">singhluxmi86@gmail.com</span>
+
+              <a
+                href="mailto:singhluxmi86@gmail.com"
+                className="contact-link-card"
+              >
+                <span className="link-label">Email</span>
+                <span className="link-value">
+                  singhluxmi86@gmail.com
+                </span>
               </a>
-              <a href="https://www.linkedin.com/in/luxmi-singh-814978361/" target="_blank" rel="noopener noreferrer" className="contact-link-card">
-                <span className="link-label">Professional Network</span>
-                <span className="link-value">LinkedIn Profile ↗</span>
+
+              <a
+                href="https://www.linkedin.com/in/luxmi-singh-814978361/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contact-link-card"
+              >
+                <span className="link-label">LinkedIn</span>
+                <span className="link-value">
+                  Connect with me ↗
+                </span>
               </a>
-              <a href="https://github.com/Luxmi1310" target="_blank" rel="noopener noreferrer" className="contact-link-card isolated">
-                <span className="link-label">Codebase Matrix</span>
-                <span className="link-value">github.com/Luxmi1310</span>
+
+              <a
+                href="https://github.com/Luxmi1310"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contact-link-card isolated"
+              >
+                <span className="link-label">GitHub</span>
+                <span className="link-value">
+                  github.com/Luxmi1310
+                </span>
               </a>
+
             </div>
+
           </div>
+
         </div>
+
         <div className="footer-bottom-copyright">
-          <p>&copy; {new Date().getFullYear()} Luxmi Singh. Engineered for scale and structural efficiency.</p>
+          <p>
+            &copy; {new Date().getFullYear()} Luxmi Singh.
+            Built with React.
+          </p>
         </div>
+
       </footer>
+
     </div>
   );
 }
