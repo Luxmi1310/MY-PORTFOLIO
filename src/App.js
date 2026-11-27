@@ -36,26 +36,41 @@ function App() {
       ? skillsData
       : skillsData.filter(skill => skill.type === activeTab);
 
-  const experienceData = [
-    {
-      company: 'Web Riderz',
-      role: 'Backend Developer Intern / Trainee',
-      employment: 'Full-time',
-      status: 'Current',
-      description:
-        'Currently gaining hands-on experience in backend development, server-side programming, application logic, and database-driven web development.',
-      tags: ['Backend Development', 'Server-side Programming', 'Web Development']
-    },
-    {
-      company: 'HB Infotech Solutions',
-      role: 'Full-Stack Developer Trainee / Intern',
-      employment: 'Previous Experience',
-      status: 'Completed',
-      description:
-        'Gained practical experience in full-stack web development, working with PHP, Laravel, MySQL, frontend technologies, and WordPress-based projects.',
-      tags: ['PHP', 'Laravel', 'MySQL', 'WordPress']
-    }
-  ];
+  
+const experienceData = [
+  {
+    company: 'Web Riderz',
+    role: 'Backend Developer Trainee',
+    employment: 'Internship / Trainee',
+    duration: 'July 2026 – November 2026',
+    status: 'Completed',
+    description:
+      'Worked on backend development using PHP, WordPress, and Laravel. Converted two static e-commerce websites into dynamic web applications with product management, cart, checkout, order management, and payment gateway integration.',
+    tags: ['PHP', 'WordPress', 'Laravel', 'MySQL']
+  },
+  
+{
+  company: 'HB Infotech Solutions',
+  role: 'Full Stack Developer Trainee / Intern',
+  employment: 'Internship',
+  duration: '6 Months',
+  status: 'Completed',
+  description:
+    'Completed 6 months of full-stack development training, gaining hands-on experience with the MERN stack (MongoDB, Express.js, React.js, Node.js), along with PHP, Laravel, MySQL, HTML, CSS, JavaScript, REST APIs and database management. Worked on frontend and backend development, authentication, CRUD operations and dynamic web applications.',
+  tags: [
+    'MongoDB',
+    'Express.js',
+    'React.js',
+    'Node.js',
+    'PHP',
+    'Laravel',
+    'MySQL',
+    'REST APIs'
+  ]
+}
+
+];
+
 
   const projectsData = [
     {
@@ -177,7 +192,7 @@ function App() {
       <span> Developer.</span>
     </h1>
 
-    <h2>Backend Developer | Web Developer</h2>
+    <h2>Backend Developer | PHP & Laravel | Full Stack Development</h2>
 
     <p className="hero-description">
       I build responsive web applications and scalable backend
@@ -226,18 +241,19 @@ function App() {
 
           <div className="glass-card about-card">
             <p>
-              I am a passionate web developer with a Bachelor of Computer
-              Applications (BCA) degree and practical experience in
-              backend and full-stack development.
-            </p>
+  I am a BCA graduate with practical experience in
+  backend and full-stack web development. I have
+  worked with PHP, Laravel, WordPress, MySQL and
+  modern frontend technologies.
+</p>
 
-            <p>
-              My development interests include server-side programming,
-              database management, application architecture, and
-              building functional web applications. I continuously
-              work on improving my technical knowledge and problem-solving
-              abilities through practical projects and professional experience.
-            </p>
+<p>
+  I enjoy building dynamic web applications,
+  developing backend functionality, managing
+  databases and solving real-world development
+  problems. I am continuously improving my skills
+  through hands-on projects and learning new technologies.
+</p>
           </div>
 
         </section>
@@ -353,7 +369,7 @@ function App() {
                 <div className="project-meta">
 
                   <span className="project-number">
-                    0{index + 1} // {project.category}
+                   0{index + 1} - {project.category}
                   </span>
 
                   <h3>{project.title}</h3>
